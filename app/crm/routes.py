@@ -6,6 +6,7 @@ if typing.TYPE_CHECKING:
 
 
 def setup_routes(app: "Application"):
-    from .views import AddUserView
+    from .views import AddUserView, ListUsersView
 
     app.router.add_view("/add_user", AddUserView)
+    app.router.add_view("/list_users", ListUsersView)

@@ -24,3 +24,6 @@ class CrmAccessor:
 
     async def add_user(self, user: User):
         self.app.database["users"].append(user)
+
+    async def list_users(self) -> list[User]:
+        return self.app.database["users"]
