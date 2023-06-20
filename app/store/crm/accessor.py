@@ -22,5 +22,5 @@ class CrmAccessor:
         self.app = None
         print("disconnect to database")
 
-    def add_user(self, user: User):
+    async def add_user(self, user: User):
         self.app.database["users"].append(user)

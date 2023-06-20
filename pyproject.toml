@@ -9,6 +9,8 @@ packages = [{include = "aiohttp_crm"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 aiohttp = "^3.8.4"
+black = "^23.3.0"
+flake8 = "^6.0.0"
 
 
 [build-system]
