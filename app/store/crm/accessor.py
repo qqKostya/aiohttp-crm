@@ -1,4 +1,5 @@
 from typing import Optional, TYPE_CHECKING
+import uuid
 from app.crm.models import User
 
 if TYPE_CHECKING:
@@ -27,3 +28,9 @@ class CrmAccessor:
 
     async def list_users(self) -> list[User]:
         return self.app.database["users"]
+
+    async def get_user(self, id_: uuid.UUID) -> Optional[User]:
+        for user in self.app.database["users"]:
+            if user.id_ == id_:
+                return user
+        return None
