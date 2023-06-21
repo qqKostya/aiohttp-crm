@@ -3,8 +3,12 @@ from marshmallow import Schema, fields
 from app.web.schemes import OkResponseSchema
 
 
-class UserSchema(Schema):
+class UserAddSchema(Schema):
     email = fields.Str(required=True)
+
+
+class UserSchema(UserAddSchema):
+    id = fields.UUID(required=True)
 
 
 class UserGetRequestSchema(Schema):

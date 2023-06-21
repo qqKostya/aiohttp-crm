@@ -1,7 +1,12 @@
 import uuid
 
 from aiohttp_apispec import docs, request_schema, response_schema, querystring_schema
-from app.crm.schemes import ListUsersResponseSchema, UserGetRequestSchema, UserSchema
+from app.crm.schemes import (
+    GetUserResponseSchema,
+    ListUsersResponseSchema,
+    UserAddSchema,
+    UserGetRequestSchema,
+)
 from app.web.app import View
 from app.crm.models import User
 from app.web.utils import json_response
@@ -12,7 +17,7 @@ from app.web.schemes import OkResponseSchema
 
 class AddUserView(View):
     @docs(tags=["crm"], summary="Add new user", description="Add new user to database")
-    @request_schema(UserSchema)
+    @request_schema(UserAddSchema)
     @response_schema(OkResponseSchema, 200)
     async def post(self):
         data = self.request["data"]
@@ -33,7 +38,7 @@ class ListUsersView(View):
 class GetUserView(View):
     @docs(tags=["crm"], summary="Get user", description="Get user from database")
     @querystring_schema(UserGetRequestSchema)
-    @response_schema(OkResponseSchema, 200)
+    @response_schema(GetUserResponseSchema, 200)
     async def get(self):
         user_id = self.request.query["id"]
         user = await self.request.app.crm_accessor.get_user(uuid.UUID(user_id))
