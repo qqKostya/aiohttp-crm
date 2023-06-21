@@ -1,11 +1,19 @@
 import uuid
+
+from aiohttp_apispec import docs, request_schema, response_schema
+from app.crm.schemes import UserSchem
 from app.web.app import View
 from app.crm.models import User
 from aiohttp.web_response import json_response
 from aiohttp.web_exceptions import HTTPNotFound
 
+from app.web.schemes import OkResponseSchema
+
 
 class AddUserView(View):
+    @docs(tags=["crm"], summary="Add new user", description="Add new user to database")
+    @request_schema(UserSchem)
+    @response_schema(OkResponseSchema, 200)
     async def post(self):
         data = await self.request.json()
         user = User(email=data["email"], id_=uuid.uuid4())
