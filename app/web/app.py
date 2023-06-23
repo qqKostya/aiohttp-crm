@@ -8,6 +8,7 @@ from aiohttp.web import (
 from aiohttp.web_app import Application
 from aiohttp.web_request import Request
 from app.store import setup_accessors
+from app.web.config import Config, setup_config
 from app.web.middlewares import setup_middlewares
 from app.web.routes import setup_routes
 from app.store.crm.accessor import CrmAccessor
@@ -15,6 +16,7 @@ from aiohttp_apispec import setup_aiohttp_apispec
 
 
 class Application(AiohttpApplication):
+    config: Optional[Config] = None
     database: dict = {}
     crm_accessor: Optional[CrmAccessor] = None
 
@@ -35,6 +37,7 @@ app = Application()
 
 
 def run_app():
+    setup_config(app)
     setup_routes(app)
     setup_aiohttp_apispec(
         app, title="CRM Application", url="/docs/json", swagger_path="/docs"

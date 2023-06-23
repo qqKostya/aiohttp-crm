@@ -17,7 +17,10 @@ async def error_handling_midlleware(request, handler):
         return response
     except HTTPUnprocessableEntity as e:
         return error_json_response(
-            http_status=400, status="bad request", message=e.reason, data=json.loads(e.text)
+            http_status=400,
+            status="bad request",
+            message=e.reason,
+            data=json.loads(e.text),
         )
     except HTTPException as e:
         return error_json_response(http_status=e.status, status="error", message=str(e))
